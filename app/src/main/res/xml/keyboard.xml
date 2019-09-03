@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:keyWidth="20%p"
+    android:horizontalGap="0dp"
+    android:verticalGap="0dp"
+    android:keyHeight="60dp">
+    <Row>
+        <Key android:codes="" android:keyLabel="設定"/>
+        <Key android:codes="8" android:keyLabel="あ"/>
+        <Key android:codes="9" android:keyLabel="か"/>
+        <Key android:codes="10" android:keyLabel="さ"/>
+        <Key android:codes="-5" android:keyLabel="Del" android:isRepeatable="true"/>
+    </Row>
+    <Row>
+        <Key android:codes="" android:keyLabel="←"/>
+        <Key android:codes="11" android:keyLabel="た"/>
+        <Key android:codes="12" android:keyLabel="な"/>
+        <Key android:codes="13" android:keyLabel="は"/>
+        <Key android:codes="" android:keyLabel="→"/>
+    </Row>
+    <Row>
+        <Key android:codes="" android:keyLabel="123/記号"/>
+        <Key android:codes="14" android:keyLabel="ま"/>
+        <Key android:codes="15" android:keyLabel="や"/>
+        <Key android:codes="16" android:keyLabel="ら"/>
+        <Key android:codes="" android:keyLabel="変換/＿"/>
+    </Row>
+    <Row>
+        <Key android:codes="" android:keyLabel="あ/A"/>
+        <Key android:codes="" android:keyLabel="”°小"/>
+        <Key android:codes="7" android:keyLabel="わ"/>
+        <Key android:codes="" android:keyLabel="？"/>
+        <Key android:codes="66" android:keyLabel="🔍" android:isRepeatable="true"/>
+    </Row>
+</Keyboard>
