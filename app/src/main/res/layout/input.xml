@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.inputmethodservice.KeyboardView
+<space.mosu.testkeyboard.CustomKeyboardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/keyboard"
+    android:background="@android:color/background_dark"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-</android.inputmethodservice.KeyboardView>
+    android:layout_height="wrap_content"
+    android:keyPreviewLayout="@layout/preview">
+</space.mosu.testkeyboard.CustomKeyboardView>

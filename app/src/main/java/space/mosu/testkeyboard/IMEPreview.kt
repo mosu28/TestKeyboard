@@ -7,9 +7,12 @@ import android.inputmethodservice.KeyboardView
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.PopupWindow
 import android.widget.TextView
 import org.jetbrains.anko.*
+import kotlin.math.round
+import kotlin.math.roundToInt
 
 class IMEPreview {
     private var popupSize = 0
@@ -27,7 +30,7 @@ class IMEPreview {
             field = value
             if (value is Keyboard.Key) {
                 keyX = value.x
-                keyY = value.x
+                keyY = value.y
                 keyWidth = value.width
                 keyHeight = value.height
             }
@@ -35,7 +38,7 @@ class IMEPreview {
 
     private val popup = PopupWindow().apply {
         inputMethodMode = PopupWindow.INPUT_METHOD_NOT_NEEDED
-        isClippingEnabled = true
+        isClippingEnabled = false
         isFocusable = false
         isOutsideTouchable = false
     }
@@ -55,6 +58,7 @@ class IMEPreview {
                     popupSize = dip(96)
                     width = wrapContent
                     height = popupSize
+                    gravity = Gravity.CENTER
                 }
             }
         }
@@ -82,10 +86,13 @@ class IMEPreview {
             return
         }
 
-        val pointX = keyboardX + (keyX + keyWidth / 2) - ui.textView.measuredWidth / 2
-        val pointY = keyboardY + (keyY + keyHeight / 2) - (1.25 * popupSize).toInt()
-
+        popup.width = (keyWidth * 0.8).roundToInt()
+        popup.height = (keyHeight * 0.8).roundToInt()
+        val pointX = keyboardX + keyX + ((keyWidth - popup.width) / 2)
+        val pointY = keyboardY + keyY - popup.height / 2
         ui.textView.text = text
+        Log.i("width", popup.width.toString())
+        Log.i("height", popup.height.toString())
         popup.showAtLocation(anchorView, Gravity.NO_GRAVITY, pointX, pointY)
     }
 
