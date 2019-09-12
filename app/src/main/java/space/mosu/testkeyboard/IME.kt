@@ -8,9 +8,7 @@ import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import kotlin.math.abs
-import kotlin.math.pow
-import kotlin.math.sqrt
+import kotlin.math.*
 
 enum class JpCharacters(val chars: String) {
     A("あいうえお"),
@@ -31,7 +29,10 @@ class IME : InputMethodService(), KeyboardView.OnKeyboardActionListener {
     private var tapY = 0F
     private var moveX = 0F
     private var moveY = 0F
+    private var currentCharacters: String = ""
+    private var isPrediction = true
     private val preview = IMEPreview()
+
 
     override fun onCreateInputView(): View {
         super.onCreateInputView()
@@ -91,29 +92,49 @@ class IME : InputMethodService(), KeyboardView.OnKeyboardActionListener {
     override fun onKey(primaryCode: Int, codes: IntArray?) {
         val ic = currentInputConnection
         if (isCharacter(primaryCode)) {
-            ic.commitText(getCharacter(primaryCode), 1)
+            currentCharacters += getCharacter(primaryCode)
+            ic.setComposingText(currentCharacters, 1)
+//            ic.finishComposingText()
+//            ic.commitText(getCharacter(primaryCode), 1)
         } else {
             when (primaryCode) {
-                Keyboard.KEYCODE_DELETE -> ic.deleteSurroundingText(1, 0)
-                KeyEvent.KEYCODE_ENTER -> ic.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_DOWN,
-                        KeyEvent.KEYCODE_ENTER
+                Keyboard.KEYCODE_DELETE -> {
+//                    currentCharacters =
+//                        currentCharacters.slice(0 until currentCursor - 1) +
+//                                currentCharacters.slice(currentCursor until currentCharacters.length)
+//                    ic.deleteSurroundingText(1, 0)
+                    ic.setComposingText(currentCharacters, 1)
+                }
+                KeyEvent.KEYCODE_ENTER -> {
+                    ic.finishComposingText()
+                    currentCharacters = ""
+                    ic.sendKeyEvent(
+                        KeyEvent(
+                            KeyEvent.ACTION_DOWN,
+                            KeyEvent.KEYCODE_ENTER
+                        )
                     )
-                )
-                KeyEvent.KEYCODE_DPAD_LEFT -> ic.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_DOWN,
-                        KeyEvent.KEYCODE_DPAD_LEFT
+                }
+                KeyEvent.KEYCODE_DPAD_LEFT -> {
+                    ic.sendKeyEvent(
+                        KeyEvent(
+                            KeyEvent.ACTION_DOWN,
+                            KeyEvent.KEYCODE_DPAD_LEFT
+                        )
                     )
-                )
-                KeyEvent.KEYCODE_DPAD_RIGHT -> ic.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_DOWN,
-                        KeyEvent.KEYCODE_DPAD_RIGHT
+                    currentCursor = max(0, currentCursor - 1)
+                }
+                KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                    ic.sendKeyEvent(
+                        KeyEvent(
+                            KeyEvent.ACTION_DOWN,
+                            KeyEvent.KEYCODE_DPAD_RIGHT
+                        )
                     )
-                )
-                else -> {}
+                    currentCursor = min(currentCharacters.length, currentCursor + 1)
+                }
+                else -> {
+                }
             }
         }
 //        getCharacter(primaryCode).run {
