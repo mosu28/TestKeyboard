@@ -37,9 +37,9 @@
     </Row>
     <Row>
         <Key android:codes="193" android:keyLabel="あ/A/123"/>
-        <Key android:codes="194" android:keyLabel="”°小"/>
+        <Key android:codes="227" android:keyLabel="”°小"/>
         <Key android:codes="7" android:keyLabel="わ"/>
         <Key android:codes="195" android:keyLabel="、。？！"/>
-        <Key android:codes="66" android:keyIcon="@drawable/ic_search_black_24dp"/>
+        <Key android:codes="66" android:keyIcon="@drawable/ic_arrow_enter_black_24dp"/>
     </Row>
 </Keyboard>
